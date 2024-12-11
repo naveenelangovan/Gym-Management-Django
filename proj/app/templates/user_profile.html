@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <title>User Profile</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        font-family: 'Raleway', sans-serif;
+        color: #ffffff;
+      }
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("{% static 'app/images/g4.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        z-index: -1;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        position: relative;
+        z-index: 1;
+        padding: 0 15px;
+      }
+
+      .card1 {
+        backdrop-filter: blur(50px) saturate(178%);
+        -webkit-backdrop-filter: blur(5px) saturate(178%);
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 35px;
+        border: 1px solid rgba(209, 213, 219, 0.3);
+        padding: 20px;
+        margin-top: 25px;
+        width: 100%;
+        max-width: 1000px;
+      }
+
+      h2 {
+        font-family: 'Raleway', sans-serif;
+        font-size: 3rem;
+        font-weight: bold;
+        color: #e68a00;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
+        text-decoration: underline;
+        margin-bottom: 20px;
+      }
+
+      h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #e68a00;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
+        text-decoration: underline;
+      }
+
+      table th, table td {
+        color: #ffffff;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 10px;
+        text-align: center;
+        font-weight: bolder;
+      }
+
+      table th {
+        font-size: 1.1rem;
+        {% comment %} background-color: rgba(0, 0, 0, 0.8); {% endcomment %}
+      }
+
+      a.btn {
+        margin: 0 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .brd {
+        border-top: 2px solid #343a40;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card1">
+        <h2 class="text-center">User Profile</h2>
+        <div class="text-center">
+          <h3>You have {{ days_left }} days left in your membership</h3>
+        </div>
+
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <td>{{ user.name }}</td>
+            </tr>
+            <tr>
+              <th>Username</th>
+              <td>{{ user.user_name }}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <th>Phone Number</th>
+              <td>{{ user.phone_number }}</td>
+            </tr>
+            <tr>
+              <th>Start Date</th>
+              <td>{{ user.start_date }}</td>
+            </tr>
+            <tr>
+              <th>End Date</th>
+              <td>{{ user.end_date }}</td>
+            </tr>
+            <tr>
+              <th>Fee Paid</th>
+              <td>{{ user.payment_status|yesno:"Paid,Not Paid" }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div
+          class="d-flex justify-content-around align-items-center mt-3 mb-2 brd"
+        >
+          <h3 class="">Workout Routines</h3>
+          <a
+            href="{% url 'add_workout' user.id %}"
+            class=" mt-2 btn btn-primary mb-3"
+            >Add Workout</a
+          >
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Workout Name</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for workout in workouts %}
+            <tr>
+              <td>{{ workout.workout_name }}</td>
+              <td>{{ workout.monday_exercises }}</td>
+              <td>{{ workout.tuesday_exercises }}</td>
+              <td>{{ workout.wednesday_exercises }}</td>
+              <td>{{ workout.thursday_exercises }}</td>
+              <td>{{ workout.friday_exercises }}</td>
+              <td>{{ workout.saturday_exercises }}</td>
+              <td>
+                <a
+                  href="{% url 'edit_workout' workout.id %}"
+                  class="btn btn-warning btn-sm"
+                  >Edit</a
+                >
+                <a
+                  href="{% url 'delete_workout' workout.id %}"
+                  class="btn btn-danger btn-sm"
+                  onclick="return confirm('Are you sure?');"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center">
+          <a href="{% url 'home' %}" class="btn btn-primary mt-3"
+            >Back to Home Page</a
+          >
+        </div>
+
+        <div
+          class="d-flex justify-content-around align-items-center mt-3 mb-2 brd"
+        >
+          <h3 class="">Attendance</h3>
+          {% if can_check_in %}
+          <a
+            href="{% url 'check_in' user.id %}"
+            class="mt-2 btn btn-success mb-3"
+            >Check In</a
+          >
+          {% endif %}
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Check In Time</th>
+              <th>Check Out Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if user_attendance %} {% for attendance in user_attendance %}
+            <tr>
+              <td>{{ attendance.check_in_time|date:"F j, Y, g:i a" }}</td>
+              <td>
+                {% if attendance.check_out_time %}
+                {{attendance.check_out_time|date:"F j, Y, g:i a" }} {% else %}
+                <a href="{% url 'check_out' user.id %}" class="btn btn-danger"
+                  >Check Out</a
+                >
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+              <td colspan="2">No attendance records found.</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

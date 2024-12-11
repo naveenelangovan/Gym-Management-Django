@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Workout</title>
+    {% load static %} {% load widget_tweaks %}
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-image: url("{% static 'app/images/g2.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .card1 {
+        backdrop-filter: blur(10px) saturate(150%);
+        -webkit-backdrop-filter: blur(10px) saturate(150%);
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 30px;
+        margin-top: 50px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+      }
+
+      h2 {
+        font-family: 'Raleway', sans-serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #e68a00;
+        text-decoration: underline;
+        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+        letter-spacing: 1px;
+        margin-bottom: 30px;
+      }
+
+      .day-box {
+        margin-bottom: 20px;
+      }
+
+      .form-control {
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-primary {
+        background-color: #e68a00;
+        border-color: #e68a00;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 1rem;
+      }
+
+      .btn-primary:hover {
+        background-color: #cc7a00;
+        border-color: #cc7a00;
+      }
+
+      .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      .form-control {
+        border: 1px solid black;
+      }
+      .card-title {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="card1">
+              <h2>Add New Workout</h2>
+              <div class="card-body">
+                <h5 class="card-title">Workout Name</h5>
+                {{ form.workout_name|add_class:"form-control mb-3" }}
+
+                <div class="row">
+                  <div class="col-md-6 day-box">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title d-inline">Monday</h5>
+                        {{ form.monday_exercises|add_class:"form-control" }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 day-box">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Tuesday</h5>
+                        {{ form.tuesday_exercises|add_class:"form-control" }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 day-box">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Wednesday</h5>
+                        {{ form.wednesday_exercises|add_class:"form-control" }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 day-box">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Thursday</h5>
+                        {{ form.thursday_exercises|add_class:"form-control" }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 day-box">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Friday</h5>
+                        {{ form.friday_exercises|add_class:"form-control" }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 day-box">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Saturday</h5>
+                        {{ form.saturday_exercises|add_class:"form-control" }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary mt-3">
+                    Add Workout
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Workout</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2 class="mt-5">Add New Workout</h2>
+      <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Add Workout</button>
+      </form>
+      <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+      {% if messages %}
+      <div class="mt-3">
+        {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
+{% endcomment %}

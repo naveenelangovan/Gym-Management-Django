@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    {% load static %}
+    <style>
+      body {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        font-family: 'Raleway', sans-serif;
+        color: #ffffff;
+        background-image: url("{% static 'app/images/g1.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        {% comment %} background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for better readability */ {% endcomment %}
+        z-index: -1;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        position: relative;
+        z-index: 1;
+        padding: 0 15px;
+      }
+
+      .card1 {
+        backdrop-filter: blur(10px) saturate(178%);
+        -webkit-backdrop-filter: blur(10px) saturate(178%);
+        {% comment %} background-color: rgba(255, 255, 255, 0.1); {% endcomment %}
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 15px;
+        padding: 30px;
+        width: 100%;
+        max-width: 600px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      h1 {
+        font-family: 'Raleway', sans-serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #e68a00;
+        text-decoration: underline;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      }
+
+      h2 {
+        font-family: 'Raleway', sans-serif;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #e68a00;
+        text-decoration: underline;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-size: 1.1rem;
+        color: #ffffff;
+      }
+
+      .form-group input {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .btn-primary {
+        background-color: #e68a00;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+      }
+
+      .btn-primary:hover {
+        background-color: #cc7a00;
+      }
+
+      .alert {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        text-shadow: none;
+      }
+
+      .btn-secondary {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #ffffff;
+      }
+
+      .btn-secondary:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="card1">
+        <h1>BMI Calculator</h1>
+
+        <form method="post" class="mt-4">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="{{ form.weight.id_for_label }}">Weight (kg)</label>
+            {{ form.weight }}
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.height.id_for_label }}">Height (cm)</label>
+            {{ form.height }}
+          </div>
+
+          <button type="submit" class="btn btn-primary">Calculate BMI</button>
+        </form>
+
+        {% if result %}
+        <h2 class="mt-4">Results</h2>
+        <p>BMI: {{ result.0|floatformat:2 }}</p>
+        <p>Category: {{ result.1 }}</p>
+        <div class="alert mt-3" role="alert">
+          {% if result.1 == 'Underweight' %}
+          <div class="alert alert-warning" role="alert">
+            <p>Advice: {{ result.2 }}</p>
+          </div>
+          {% elif result.1 == 'Normal weight' %}
+          <div class="alert alert-success" role="alert">
+            <p>Advice: {{ result.2 }}</p>
+          </div>
+          {% elif result.1 in 'Overweight' or result.1 == 'Obesity' %}
+          <div class="alert alert-danger" role="alert">
+            <p>Advice: {{ result.2 }}</p>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div class="d-flex align-items-center justify-content-center">
+          <a href="{% url 'home' %}" class="btn btn-secondary mt-3"
+            >Back to Home Page</a
+          >
+        </div>
+
+        {% comment %}
+        <div class="d-flex align-items-center justify-content-center">
+          <button class="btn btn-secondary mt-3" onclick="window.print()">
+            Print
+          </button>
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

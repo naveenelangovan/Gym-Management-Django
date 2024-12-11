@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      background-image: url("{% static 'app/images/g2.jpg' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    .container {
+      backdrop-filter: blur(5px) saturate(178%);
+      -webkit-backdrop-filter: blur(5px) saturate(178%);
+      background-color: rgba(255, 255, 255, 0.04);
+      border-radius: 35px;
+      border: 1px solid rgba(209, 213, 219, 0.3);
+      margin-top: 150px;
+      max-width: 400px;
+      padding: 20px;
+    }
+    h2 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #e68a00;
+      text-decoration: underline;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9), 1px 1px 2px rgba(0, 0, 0, 0.8);
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+  </style>
+
+  <body>
+    <div class="container">
+      <h2 class="mt-1 text-center">Admin Login</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter Your Password"
+            id="password"
+            name="password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    {% load static %}
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="{% static 'css/index.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <style>
+        body {
+          background-image: url("{% static 'app\images\g2.jpg' %}");
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+        }
+        .card1 {
+          backdrop-filter: blur(5px) saturate(178%);
+          -webkit-backdrop-filter: blur(5px) saturate(178%);
+          background-color: rgba(255, 255, 255, 0.04);
+          border-radius: 35px;
+          border: 1px solid rgba(209, 213, 219, 0.3);
+          margin-top: 200px
+      }
+      h2 {
+        font-family: 'Raleway', sans-serif;
+        font-size: 3rem;
+        font-weight: bold;
+        color: #e68a00;
+        text-decoration: underline;
+        text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9), 1px 1px 2px rgba(0, 0, 0, 0.8);
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+      }
+    </style>
+    <div
+      class="container d-flex justify-content-center align-items-center flex-column  card1 p-3 "
+    >
+      <h2 class="mt-2 mb-4 text-center  text-uppercase">
+        Welcome to Gym Management System
+      </h2>
+
+      <div class="d-flex justify-content-center align-items-center  ">
+        <div class="mb-3">
+          <a href="{% url 'admin_login' %}" class="btn btn-primary btn-lg ml-3"
+            >Admin Login</a
+          >
+        </div>
+        <div class="mb-3">
+          <a href="{% url 'user_login' %}" class="btn btn-secondary btn-lg ml-3"
+            >User Login</a
+          >
+        </div>
+        <div class="mb-3">
+          <a
+            href="{% url 'calculate_bmi' %}"
+            class="btn btn-success btn-lg ml-3"
+            >BMI Calculator</a
+          >
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

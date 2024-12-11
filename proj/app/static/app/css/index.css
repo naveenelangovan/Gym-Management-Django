@@ -1,0 +1,8 @@
+body {
+  background-image: url("{% static 'app/images/Sporto_Fitness.jpg' %}");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 2;
+}
+
